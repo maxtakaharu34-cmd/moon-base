@@ -493,7 +493,7 @@ export function drawHUD(
   ctx.fillStyle = '#fff';
   ctx.font = 'bold 13px monospace';
   ctx.textAlign = 'center';
-  ctx.fillText(`LEVEL ${level} / ${totalLevels}`, CANVAS_W / 2, 26);
+  ctx.fillText(`レベル ${level} / ${totalLevels}`, CANVAS_W / 2, 26);
   ctx.textAlign = 'left';
 }
 
@@ -540,14 +540,14 @@ export function drawOverlay(
 
 export function drawLevelComplete(ctx: CanvasRenderingContext2D, score: number, coins: number, level: number) {
   drawOverlay(ctx, '🎉 CLEAR!', [
-    `Score: ${score}`,
+    `スコア: ${score}`,
     `Coins: 🪙 ${coins}`,
     level < 3 ? `Next: Level ${level + 1}` : 'All levels done!',
-  ], level < 3 ? 'Next Level →' : 'Play Again');
+  ], level < 3 ? '次のレベル →' : 'Play Again');
 }
 
 export function drawGameOver(ctx: CanvasRenderingContext2D, score: number) {
-  drawOverlay(ctx, 'GAME OVER', [`Score: ${score}`, 'Better luck next time!'], 'Try Again');
+  drawOverlay(ctx, 'ゲームオーバー', [`スコア: ${score}`, 'Better luck next time!'], 'もう一度');
 }
 
 // ─── util ────────────────────────────────────────────────────────────────

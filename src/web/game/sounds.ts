@@ -16,7 +16,7 @@ function tone(freq: number, dur: number, type: OscillatorType = 'square', vol = 
 }
 
 export function initAudio() { ac(); }
-export function sfxJump()    { tone(400, 0.08, 'square', 0.1); setTimeout(() => tone(600, 0.06, 'square', 0.08), 60); }
+export function sfxジャンプ()    { tone(400, 0.08, 'square', 0.1); setTimeout(() => tone(600, 0.06, 'square', 0.08), 60); }
 export function sfxCoin()    { tone(800, 0.06, 'sine', 0.12); setTimeout(() => tone(1100, 0.08, 'sine', 0.1), 50); }
 export function sfxHit()     { tone(200, 0.15, 'sawtooth', 0.1); }
 export function sfxPowerup() { [500, 700, 900, 1200].forEach((f, i) => setTimeout(() => tone(f, 0.1, 'sine', 0.1), i * 70)); }

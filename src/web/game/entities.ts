@@ -48,7 +48,7 @@ export class Player {
   }
 
   get speed() { return this.hasPowerup('speed') ? PLAYER_SPEED * 1.7 : PLAYER_SPEED; }
-  get maxJumps() { return this.hasPowerup('double_jump') ? 2 : 1; }
+  get maxジャンプs() { return this.hasPowerup('double_jump') ? 2 : 1; }
   get isInvincible() { return Date.now() < this.invincibleUntil || this.hasPowerup('star') || this.hasPowerup('shield'); }
 
   update(keys: Set<string>, platforms: Platform[], dt: number) {
@@ -63,7 +63,7 @@ export class Player {
     else if (keys.has(this.controls.right)) { this.vx =  this.speed; this.facing = 1; }
     else this.vx *= 0.75;
 
-    // Jump
+    // ジャンプ
     if ((keys.has(this.controls.jump) || keys.has(' ')) && this.index === 0) {
       if (this.onGround || this.jumpsLeft > 0) {
         this.vy = JUMP_FORCE;
@@ -76,11 +76,11 @@ export class Player {
     this.vy += GRAVITY;
     if (this.vy > 18) this.vy = 18;
 
-    // Move X
+    // 移動 X
     this.x += this.vx;
     this.x = Math.max(0, this.x);
 
-    // Move Y
+    // 移動 Y
     this.onGround = false;
     this.y += this.vy;
 
@@ -92,7 +92,7 @@ export class Player {
           this.y = plat.y - this.h;
           this.vy = 0;
           this.onGround = true;
-          this.jumpsLeft = this.maxJumps;
+          this.jumpsLeft = this.maxジャンプs;
         } else if (this.vy < 0 && this.y > plat.y) {
           this.y = plat.y + plat.h;
           this.vy = 1;

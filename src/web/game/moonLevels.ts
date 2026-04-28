@@ -1,6 +1,6 @@
 import type { LevelData } from './levels';
 
-export const MOON_LEVELS: LevelData[] = [
+export const MOON_レベルS: LevelData[] = [
   {
     id: 1, name: 'Mare Imbrium',
     bgColors: ['#0a0a1a', '#1a1a3a'],

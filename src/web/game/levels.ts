@@ -14,7 +14,7 @@ export interface LevelData {
   width: number;
 }
 
-export const LEVELS: LevelData[] = [
+export const レベルS: LevelData[] = [
   {
     id: 1,
     name: 'Sunrise Island',

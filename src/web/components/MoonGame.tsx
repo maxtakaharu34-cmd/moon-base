@@ -2,13 +2,13 @@ import { useRef, useEffect, useCallback, useState } from 'react';
 import { CANVAS_W, CANVAS_H, POWERUP_CONFIG } from '../game/constants';
 import type { CharId } from '../game/constants';
 import { Player, Platform, Coin, Powerup, Enemy, buildLevel, rectsOverlap } from '../game/entities';
-import { MOON_LEVELS } from '../game/moonLevels';
+import { MOON_レベルS } from '../game/moonLevels';
 import { THEME } from '../game/theme';
 import {
   drawMoonBackground, drawMoonPlatform, drawMoonCoin,
   drawMoonPowerup, drawMoonEnemy, drawMoonPlayer,
 } from '../game/moonRenderer';
-import { initAudio, sfxJump, sfxCoin, sfxHit, sfxPowerup, sfxDie, sfxClear, sfxStep } from '../game/sounds';
+import { initAudio, sfxジャンプ, sfxCoin, sfxHit, sfxPowerup, sfxDie, sfxClear, sfxStep } from '../game/sounds';
 
 // Override gravity/jump for moon physics
 const MOON_GRAVITY = 0.28;
@@ -45,7 +45,7 @@ export default function MoonGame() {
   const levelRef = useRef(1);
   const soundRef = useRef(true);
   const animRef = useRef(0);
-  const levelDataRef = useRef(MOON_LEVELS[0]);
+  const levelDataRef = useRef(MOON_レベルS[0]);
 
   useEffect(() => { screenRef.current = screen; }, [screen]);
   useEffect(() => { soundRef.current = soundOn; }, [soundOn]);
@@ -53,7 +53,7 @@ export default function MoonGame() {
   const sfx = useCallback((fn: () => void) => { if (soundRef.current) fn(); }, []);
 
   const loadLevel = useCallback((idx: number, chars: string[], gm: Mode) => {
-    const data = MOON_LEVELS[idx];
+    const data = MOON_レベルS[idx];
     levelDataRef.current = data;
     const { platforms, coins, powerups, enemies } = buildLevel(data);
     platformsRef.current = platforms;
@@ -78,16 +78,16 @@ export default function MoonGame() {
       if (['ArrowUp', ' ', 'w'].includes(e.key)) e.preventDefault();
       if (['ArrowUp', ' '].includes(e.key)) {
         const p = playersRef.current[0];
-        if (p && (p.onGround || p.jumpsLeft > 0)) { p.jump(); sfx(sfxJump); }
+        if (p && (p.onGround || p.jumpsLeft > 0)) { p.jump(); sfx(sfxジャンプ); }
       }
       if (e.key === 'w') {
         const p = playersRef.current[1];
-        if (p && (p.onGround || p.jumpsLeft > 0)) { p.jump(); sfx(sfxJump); }
+        if (p && (p.onGround || p.jumpsLeft > 0)) { p.jump(); sfx(sfxジャンプ); }
       }
       if (e.key === 'Enter') {
         if (screenRef.current === 'level_complete') {
           const next = levelRef.current + 1;
-          if (next <= MOON_LEVELS.length) startGame(next); else setScreen('menu');
+          if (next <= MOON_レベルS.length) startGame(next); else setScreen('menu');
         }
         if (screenRef.current === 'gameover') startGame(levelRef.current);
       }
@@ -139,7 +139,7 @@ export default function MoonGame() {
             const prev = p.y + p.h - p.vy;
             if (p.vy >= 0 && prev <= plat.y + 2) {
               p.y = plat.y - p.h; p.vy = 0; p.onGround = true;
-              p.jumpsLeft = p.maxJumps;
+              p.jumpsLeft = p.maxジャンプs;
             } else if (p.vy < 0 && p.y > plat.y) { p.y = plat.y + plat.h; p.vy = 1; }
           }
         }
@@ -217,7 +217,7 @@ export default function MoonGame() {
       drawGoalFlag(ctx, lvl.goal);
       ctx.restore();
 
-      drawMoonHUD(ctx, players, levelRef.current, MOON_LEVELS.length);
+      drawMoonHUD(ctx, players, levelRef.current, MOON_レベルS.length);
     };
 
     animRef.current = requestAnimationFrame(loop);
@@ -281,13 +281,13 @@ export default function MoonGame() {
               {soundOn ? '🔊' : '🔇'}
             </button>
           </div>
-          <p className="text-gray-500 text-xs">P1: ←→ Move · ↑ Jump | P2: A D Move · W Jump</p>
+          <p className="text-gray-500 text-xs">P1: ←→ 移動 · ↑ ジャンプ | P2: A D 移動 · W ジャンプ</p>
         </div>
       )}
 
       {screen === 'board' && (
         <div className="flex flex-col items-center gap-3 w-full max-w-sm">
-          <h3 className="text-yellow-400 font-bold text-lg">🏆 Moon Base Scores</h3>
+          <h3 className="text-yellow-400 font-bold text-lg">🏆 月面基地 Scores</h3>
           <div className="w-full bg-gray-800 rounded-xl overflow-hidden">
             {board.length === 0
               ? <p className="text-gray-400 text-center p-4 text-sm">No scores yet</p>
@@ -307,7 +307,7 @@ export default function MoonGame() {
       {screen === 'playing' && (
         <div className="flex flex-col gap-2 md:hidden w-full max-w-xs">
           <div className="flex justify-center">
-            <button onTouchStart={(e) => { e.preventDefault(); playersRef.current[0]?.jump(); sfx(sfxJump); }}
+            <button onTouchStart={(e) => { e.preventDefault(); playersRef.current[0]?.jump(); sfx(sfxジャンプ); }}
               className="w-14 h-14 bg-cyan-800 rounded-xl text-2xl font-bold text-white active:bg-cyan-600 flex items-center justify-center">↑</button>
           </div>
           <div className="flex justify-center gap-3">
@@ -323,9 +323,9 @@ export default function MoonGame() {
 
       {screen === 'level_complete' && (
         <div className="flex gap-3">
-          <button onClick={() => { const n = currentLevel + 1; if (n <= MOON_LEVELS.length) startGame(n); else setScreen('menu'); }}
+          <button onClick={() => { const n = currentLevel + 1; if (n <= MOON_レベルS.length) startGame(n); else setScreen('menu'); }}
             className="px-6 py-3 bg-gradient-to-r from-green-600 to-emerald-600 text-white rounded-xl font-bold hover:scale-105 transition-transform">
-            {currentLevel < MOON_LEVELS.length ? 'Next Level →' : '🏠 Menu'}
+            {currentLevel < MOON_レベルS.length ? '次のレベル →' : '🏠 Menu'}
           </button>
         </div>
       )}
@@ -333,9 +333,9 @@ export default function MoonGame() {
         <div className="flex gap-3">
           <button onClick={() => startGame(currentLevel)}
             className="px-6 py-3 bg-gradient-to-r from-cyan-700 to-blue-700 text-white rounded-xl font-bold hover:scale-105 transition-transform">
-            Try Again
+            もう一度
           </button>
-          <button onClick={() => setScreen('menu')} className="px-6 py-3 bg-gray-700 text-white rounded-xl font-bold hover:bg-gray-600">Menu</button>
+          <button onClick={() => setScreen('menu')} className="px-6 py-3 bg-gray-700 text-white rounded-xl font-bold hover:bg-gray-600">メニュー</button>
         </div>
       )}
     </div>
@@ -371,7 +371,7 @@ function drawMoonHUD(ctx: CanvasRenderingContext2D, players: Player[], level: nu
   ctx.fillStyle = 'rgba(0,20,40,0.6)';
   rr(ctx, CANVAS_W / 2 - 60, 8, 120, 28, 8); ctx.fill();
   ctx.fillStyle = '#4fc3f7'; ctx.font = 'bold 13px monospace'; ctx.textAlign = 'center';
-  ctx.fillText(`LEVEL ${level} / ${total}`, CANVAS_W / 2, 26);
+  ctx.fillText(`レベル ${level} / ${total}`, CANVAS_W / 2, 26);
   ctx.textAlign = 'left';
 }
 
@@ -381,14 +381,14 @@ function drawOverlay(ctx: CanvasRenderingContext2D, type: string, level: number,
   if (type === 'level_complete') {
     ctx.fillStyle = '#4fc3f7'; ctx.font = 'bold 36px monospace'; ctx.fillText('🚀 CLEAR!', CANVAS_W / 2, CANVAS_H / 2 - 50);
     ctx.fillStyle = '#fff'; ctx.font = '16px monospace';
-    ctx.fillText(`Score: ${players[0]?.score || 0}`, CANVAS_W / 2, CANVAS_H / 2 - 10);
+    ctx.fillText(`スコア: ${players[0]?.score || 0}`, CANVAS_W / 2, CANVAS_H / 2 - 10);
     ctx.fillText(`Coins: ✦ ${players[0]?.coins || 0}`, CANVAS_W / 2, CANVAS_H / 2 + 15);
     ctx.fillStyle = '#80deea'; ctx.font = '14px monospace';
-    ctx.fillText('Press ENTER for next level', CANVAS_W / 2, CANVAS_H / 2 + 55);
+    ctx.fillText('ENTERで次のレベル', CANVAS_W / 2, CANVAS_H / 2 + 55);
   } else {
-    ctx.fillStyle = '#ef5350'; ctx.font = 'bold 34px monospace'; ctx.fillText('GAME OVER', CANVAS_W / 2, CANVAS_H / 2 - 40);
-    ctx.fillStyle = '#fff'; ctx.font = '16px monospace'; ctx.fillText(`Score: ${players[0]?.score || 0}`, CANVAS_W / 2, CANVAS_H / 2);
-    ctx.fillStyle = '#4fc3f7'; ctx.font = '14px monospace'; ctx.fillText('Press ENTER to retry', CANVAS_W / 2, CANVAS_H / 2 + 40);
+    ctx.fillStyle = '#ef5350'; ctx.font = 'bold 34px monospace'; ctx.fillText('ゲームオーバー', CANVAS_W / 2, CANVAS_H / 2 - 40);
+    ctx.fillStyle = '#fff'; ctx.font = '16px monospace'; ctx.fillText(`スコア: ${players[0]?.score || 0}`, CANVAS_W / 2, CANVAS_H / 2);
+    ctx.fillStyle = '#4fc3f7'; ctx.font = '14px monospace'; ctx.fillText('ENTERで再挑戦', CANVAS_W / 2, CANVAS_H / 2 + 40);
   }
   ctx.textAlign = 'left';
 }

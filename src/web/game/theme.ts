@@ -1,10 +1,10 @@
 export const THEME = {
-  name: 'Moon Base',
+  name: '月面基地',
   bgColors: ['#0a0a1a', '#1a0a2e'] as [string, string],
   gravity: 0.28,          // low gravity on moon!
   jumpForce: -10,
   characters: [
-    { id: 'astro',   name: 'Astro',    color: '#e0e0e0', accent: '#4fc3f7', ear: '#b0bec5' },
+    { id: 'astro',   name: 'アストロ',    color: '#e0e0e0', accent: '#4fc3f7', ear: '#b0bec5' },
     { id: 'cosmo',   name: 'Cosmo',    color: '#ce93d8', accent: '#fff9c4', ear: '#ab47bc' },
     { id: 'rocket',  name: 'Rocket',   color: '#ef9a9a', accent: '#fff8e1', ear: '#e53935' },
   ],
